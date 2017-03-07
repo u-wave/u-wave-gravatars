@@ -1,0 +1,13 @@
+{
+  "name": "u-wave-gravatars",
+  "version": "0.0.0",
+  "description": "Gravatars for üWave.",
+  "main": "index.js",
+  "repository": "u-wave/u-wave-gravatars",
+  "author": "Renée Kooi <renee@kooi.me>",
+  "license": "MIT",
+  "dependencies": {
+    "got": "^6.7.1",
+    "md5-hex": "^2.0.0"
+  }
+}
