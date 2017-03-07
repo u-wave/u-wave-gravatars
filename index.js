@@ -9,24 +9,36 @@ function tryJsonParse(json) {
   }
 }
 
+const baseUrl = 'https://gravatar.com/avatar/';
+
 function gravatars() {
   return (uw) => {
     const subscription = uw.subscription();
 
-    function checkGravatar(userID, email) {
+    function getGravatar(email) {
       const gid = md5(email.trim().toLowerCase());
-      const avatarUrl = `https://gravatar.com/avatar/${gid}`;
-      got(avatarUrl, { query: { d: 404 } })
-        // Avatar exists:
-        .then(() => uw.getUser(userID))
-        .then((user) => {
+      const avatarUrl = `${baseUrl}${gid}`;
+      // Return the avatar URL if the avatar exists. Otherwise return null.
+      return got(avatarUrl, { query: { d: 404 } })
+        .then(() => avatarUrl)
+        .catch(() => null);
+    }
+
+    function checkGravatar(userID, email) {
+      return Promise.all([ getGravatar(), uw.getUser(userID) ]).then((results) => {
+        const avatarUrl = results[0];
+        const user = results[1];
+
+        if (avatarUrl) {
           user.avatar = avatarUrl;
-          return user.save();
-        })
-        // Avatar doesn't exist:
-        .catch(() => {
-          // Ignore
-        })
+        } else if (user.avatar.startsWith(baseUrl)) {
+          // If no Gravatar was found, but the user still has a Gravatar
+          // configured, clear it.
+          user.avatar = null;
+        }
+
+        return user.save();
+      })
     }
 
     subscription.on('message', (channel, command) => {
