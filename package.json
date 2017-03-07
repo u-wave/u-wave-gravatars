@@ -6,8 +6,16 @@
   "repository": "u-wave/u-wave-gravatars",
   "author": "Renée Kooi <renee@kooi.me>",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint ."
+  },
   "dependencies": {
     "got": "^6.7.1",
     "md5-hex": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.17.1",
+    "eslint-config-airbnb-base": "^11.1.1",
+    "eslint-plugin-import": "^2.2.0"
   }
 }

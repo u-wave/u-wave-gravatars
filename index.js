@@ -25,7 +25,10 @@ function gravatars() {
     }
 
     function checkGravatar(userID, email) {
-      return Promise.all([ getGravatar(), uw.getUser(userID) ]).then((results) => {
+      return Promise.all([
+        getGravatar(email),
+        uw.getUser(userID),
+      ]).then((results) => {
         const avatarUrl = results[0];
         const user = results[1];
 
@@ -38,7 +41,7 @@ function gravatars() {
         }
 
         return user.save();
-      })
+      });
     }
 
     subscription.on('message', (channel, command) => {
@@ -46,6 +49,7 @@ function gravatars() {
 
       if (p.command === 'user:create') {
         const email = p.data.auth.email;
+        // eslint-disable-next-line no-underscore-dangle
         checkGravatar(p.data.user._id, email);
       }
     });
