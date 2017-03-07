@@ -7,7 +7,8 @@
   "author": "Renée Kooi <renee@kooi.me>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "npm run lint"
   },
   "dependencies": {
     "got": "^6.7.1",
