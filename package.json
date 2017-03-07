@@ -1,6 +1,6 @@
 {
   "name": "u-wave-gravatars",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Gravatars for üWave.",
   "main": "index.js",
   "repository": "u-wave/u-wave-gravatars",
